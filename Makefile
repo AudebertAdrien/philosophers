@@ -25,6 +25,7 @@ $(NAME): $(OBJS)
 vg:
 	@echo "Valgrind Philophers"
 	valgrind $(VG_FLAGS) ./$(NAME)
+
 clean:
 	@echo "Clean Philophers" 
 	@rm -rf $(OBJS)
