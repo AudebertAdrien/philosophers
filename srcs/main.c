@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:51:27 by motoko            #+#    #+#             */
-/*   Updated: 2023/09/20 18:25:52 by motoko           ###   ########.fr       */
+/*   Updated: 2023/09/20 19:03:25 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <pthread.h>
 
 int balance = 0;
+
+pthread_mutex_t mutex;
 
 int	read_balance()
 {
@@ -30,10 +32,12 @@ void	write_balance(int new_balance)
 
 void	*deposite(void *amount)
 {
+	pthread_mutex_lock(&mutex);
 	int account_balance = read_balance();
 
 	account_balance += *((int *)amount);
 	write_balance(account_balance);
+	pthread_mutex_unlock(&mutex);
 	return (NULL);
 }
 
@@ -44,12 +48,15 @@ int	main(void)
 
 	int	before = read_balance();
 	printf("Before: %d\n", before);
-	int one = 300;
-	int two = 200;
+	int credit1 = 300;
+	int credit2 = 200;
 
-	pthread_create(&thread1, NULL, deposite, (void *)&one);
+	pthread_mutex_init(&mutex, NULL);
+
+	pthread_create(&thread1, NULL, deposite, (void *)&credit1);
+	pthread_create(&thread2, NULL, deposite, (void *)&credit2);
+
 	pthread_join(thread1, NULL);
-	pthread_create(&thread2, NULL, deposite, (void *)&two);
 	pthread_join(thread2, NULL);
 
 	int after = read_balance();
