@@ -2,7 +2,7 @@ NAME		= a.out
 
 CC		= gcc -g
 CFLAGS		= -Wall -Wextra
-VG		= valgrind --tool=drd --tool=helgrind
+VG_FLAGS	= --tool=drd --tool=helgrind
 
 VPATH		= srcs
 OBJ_DIR		= obj
@@ -22,6 +22,9 @@ $(NAME): $(OBJS)
 	@echo "Compile Philophers"
 	$(CC) $^ -o $@
 
+vg:
+	@echo "Valgrind Philophers"
+	valgrind $(VG_FLAGS) ./$(NAME)
 clean:
 	@echo "Clean Philophers" 
 	@rm -rf $(OBJS)

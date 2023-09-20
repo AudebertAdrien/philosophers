@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:51:27 by motoko            #+#    #+#             */
-/*   Updated: 2023/09/20 14:08:26 by motoko           ###   ########.fr       */
+/*   Updated: 2023/09/20 14:43:51 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*my_turn(void *arg)
 	int	i;
 
 	i = 0;
-	while (i < 3)
+	while (i < 6)
 	{
 		sleep(1);
 		printf("My turn %d\n", i);
@@ -33,7 +33,7 @@ void	your_turn(void)
 	int	i;
 
 	i = 0;
-	while (i < 6)
+	while (i < 3)
 	{
 		sleep(1);
 		printf("Your turn %d\n", i);
@@ -44,10 +44,11 @@ void	your_turn(void)
 
 int	main(int argc, char **argv)
 {
-	pthread_t	newthread;
+	pthread_t	new_thread;
 
-	pthread_create(&newthread, NULL, my_turn, NULL);
+	pthread_create(&new_thread, NULL, my_turn, NULL);
 	//my_turn();
 	your_turn();
+	pthread_join(new_thread, NULL);
 	return (0);
 }
