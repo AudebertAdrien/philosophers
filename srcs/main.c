@@ -5,109 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 13:51:27 by motoko            #+#    #+#             */
-/*   Updated: 2023/09/20 19:03:25 by motoko           ###   ########.fr       */
+/*   Created: 2023/09/21 12:00:50 by motoko            #+#    #+#             */
+/*   Updated: 2023/09/23 21:07:53 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <pthread.h>
-
-int balance = 0;
+#include <philosophers.h>
 
 pthread_mutex_t mutex;
+int	email = 0;
 
-int	read_balance()
+void	*my_turn(void *lst)
 {
-	usleep(250000);
-	return (balance);	
-}
+	int	id;
 
-void	write_balance(int new_balance)
-{
-	usleep(250000);
-	balance = new_balance;
-}
-
-void	*deposite(void *amount)
-{
 	pthread_mutex_lock(&mutex);
-	int account_balance = read_balance();
-
-	account_balance += *((int *)amount);
-	write_balance(account_balance);
+	for (int i = 0; i < 5; i++)
+		email++;
 	pthread_mutex_unlock(&mutex);
-	return (NULL);
+	//printf("email : %d\n", email);
+	/*
+	id = ((t_list *)lst)->id;
+	if (id % 2 == 0)
+		printf("odd => %d\n", (((t_list *)lst)->id));
+	else 
+		printf("even => %d\n", (((t_list *)lst)->id));
+	*/
 }
 
-int	main(void)
+pthread_t	create_threads(t_list *lst)
 {
-	pthread_t	thread1;
-	pthread_t	thread2;
+	int		is_error;
 
-	int	before = read_balance();
-	printf("Before: %d\n", before);
-	int credit1 = 300;
-	int credit2 = 200;
-
-	pthread_mutex_init(&mutex, NULL);
-
-	pthread_create(&thread1, NULL, deposite, (void *)&credit1);
-	pthread_create(&thread2, NULL, deposite, (void *)&credit2);
-
-	pthread_join(thread1, NULL);
-	pthread_join(thread2, NULL);
-
-	int after = read_balance();
-	printf("After: %d\n", after);
-
+	while (lst)
+	{
+		is_error = pthread_create(&(lst->thread), NULL, &my_turn, (void *)lst);
+		if (is_error)
+		{
+			printf("error create : %d\n", is_error);
+			return (0);
+		}
+		lst = lst->next;
+	}
 	return (0);
 }
 
-/*
-void	*my_turn(void *arg)
+
+pthread_t	join_threads(t_list *lst)
 {
-	int	i;
+	int		is_error;
 
-	i = 0;
-	while (i < 6)
+	while (lst)	
 	{
-		sleep(1);
-		printf("My turn %d\n", i);
-		i++;
-	}
-	return (NULL);
+		is_error = pthread_join(lst->thread, NULL);
+		if (is_error)
+		{
+			printf("error join : %d\n", is_error);
+			return (0);
+		}
+		lst = lst->next;
+	}	
+	return (0);
 }
-
-
-void	*your_turn(void *)
-{
-	int	i;
-
-	i = 0;
-	while (i < 3)
-	{
-		sleep(1);
-		printf("Your turn %d\n", i);
-		i++;
-	}
-	return (NULL);
-}
-
 
 int	main(int argc, char **argv)
 {
-	pthread_t	new_thread1;
-	pthread_t	new_thread2;
+	t_list	*lst;
+	t_list	*new;
+	int	i;
+	int		is_error;
 
-	pthread_create(&new_thread1, NULL, my_turn, NULL);
-	pthread_join(new_thread1, NULL);
-	//my_turn();
+	pthread_mutex_init(&mutex, NULL);
+	i = 1;
+	while (argv[i])
+	{
+		new = ft_lstnew(i);
+		ft_lstadd_back(&lst, new);
+		i++;
+	}
+	print_lst(lst);
+	create_threads(lst);
+	join_threads(lst);
 
-	pthread_create(&new_thread2, NULL, your_turn, NULL);
-	pthread_join(new_thread2, NULL);
-	//your_turn();
+	pthread_mutex_destroy(&mutex);
+	printf("email : %d\n", email);
 	return (0);
 }
-*/

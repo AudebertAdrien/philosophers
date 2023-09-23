@@ -3,11 +3,17 @@ NAME		= a.out
 CC		= gcc -g
 CFLAGS		= -Wall -Wextra
 VG_FLAGS	= --tool=drd --tool=helgrind
+INC		= ./includes
 
 VPATH		= srcs
 OBJ_DIR		= obj
 
-SRCS		= main.c
+SRCS		= main.c \
+		  utils.c \
+		  ft_lstnew.c \
+		  ft_lstlast.c \
+		  ft_lstadd_back.c \
+
 OBJS		= $(addprefix obj/, $(SRCS:.c=.o))
 
 all: $(NAME)
@@ -16,7 +22,7 @@ mkdir:
 	mkdir -p $(OBJ_DIR) 
 
 obj/%.o: %.c  mkdir
-	$(CC) $(CLAGS) -c $< -o $@
+	$(CC) $(CLAGS) -I$(INC) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@echo "Compile Philophers"
