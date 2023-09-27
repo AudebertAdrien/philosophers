@@ -6,7 +6,7 @@
 /*   By: aaudeber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:33:37 by aaudeber          #+#    #+#             */
-/*   Updated: 2023/09/21 16:52:40 by motoko           ###   ########.fr       */
+/*   Updated: 2023/09/27 14:38:30 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_list	*ft_lstnew(int id)
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
 		return (NULL);
-	new->id = id;
+	new->philo_id = id;
+	new->stat = NULL;
 	new->next = NULL;
 	return (new);
 }

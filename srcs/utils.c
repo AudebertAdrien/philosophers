@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:07:58 by motoko            #+#    #+#             */
-/*   Updated: 2023/09/24 17:23:39 by motoko           ###   ########.fr       */
+/*   Updated: 2023/09/26 09:50:15 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_lst(t_list *lst)
 {
 	while (lst)
 	{
-		printf("==> %d\n", (lst)->id);
+		printf("==> %d\n", (lst)->philo_id);
 		lst = (lst)->next;
 	}
 }

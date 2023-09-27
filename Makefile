@@ -1,6 +1,6 @@
 NAME		= a.out
 
-CC		= gcc -g
+CC		= gcc
 CFLAGS		= -Wall -Wextra
 VG_FLAGS	= --tool=drd --tool=helgrind
 INC		= ./includes
