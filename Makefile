@@ -1,8 +1,11 @@
 NAME		= a.out
 
-CC		= gcc
+CC		= gcc -g
 CFLAGS		= -Wall -Wextra
-VG_FLAGS	= --tool=drd --tool=helgrind
+
+#VG_FLAGS	= --tool=drd 
+VG_FLAgS	= --tool=helgrind 
+
 INC		= ./includes
 
 VPATH		= srcs
@@ -13,6 +16,9 @@ SRCS		= main.c \
 		  ft_lstnew.c \
 		  ft_lstlast.c \
 		  ft_lstadd_back.c \
+		  ft_lstclear.c \
+		  ft_bzero.c \
+		  ft_calloc.c \
 
 OBJS		= $(addprefix obj/, $(SRCS:.c=.o))
 
@@ -21,17 +27,16 @@ all: $(NAME)
 mkdir:
 	mkdir -p $(OBJ_DIR) 
 
+vg:
+	@echo "Valgrind Philophers"
+	valgrind $(VG_FLAGS) ./$(NAME)
+
 obj/%.o: %.c  mkdir
 	$(CC) $(CLAGS) -I$(INC) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@echo "Compile Philophers"
 	$(CC) $^ -o $@
-
-vg:
-	@echo "Valgrind Philophers"
-	valgrind $(VG_FLAGS) ./$(NAME)
-
 clean:
 	@echo "Clean Philophers" 
 	@rm -rf $(OBJS)
@@ -42,4 +47,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re 

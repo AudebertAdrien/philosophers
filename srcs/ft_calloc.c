@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaudeber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/15 15:33:37 by aaudeber          #+#    #+#             */
-/*   Updated: 2023/09/29 15:01:40 by motoko           ###   ########.fr       */
+/*   Created: 2023/02/07 16:35:22 by aaudeber          #+#    #+#             */
+/*   Updated: 2023/09/29 15:54:23 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_list	*ft_lstnew(int id)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	t_list	*new;
-	pthread_mutex_t	fork;
-	int	is_error;
+	void	*ptr;
 
-	is_error = pthread_mutex_init(&fork, NULL);	
-	if (is_error)
-		handle_error("phtread_init");
-
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!new)
+	if (!nmemb || !size)
+		return (malloc(0));
+	if (nmemb * size / size != nmemb)
 		return (NULL);
-	new->philo_id = id;
-	new->fork = fork;
-	new->next = NULL;
-	return (new);
+	ptr = (void *)malloc(nmemb * size);
+	if (!ptr)
+		return (NULL);
+	ft_bzero(ptr, nmemb * size);
+	return (ptr);
 }

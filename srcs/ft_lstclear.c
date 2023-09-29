@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaudeber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/15 15:33:37 by aaudeber          #+#    #+#             */
-/*   Updated: 2023/09/29 15:01:40 by motoko           ###   ########.fr       */
+/*   Created: 2023/02/16 18:06:25 by aaudeber          #+#    #+#             */
+/*   Updated: 2023/09/28 15:06:40 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_list	*ft_lstnew(int id)
+void	ft_lstclear(t_list **lst)
 {
-	t_list	*new;
-	pthread_mutex_t	fork;
-	int	is_error;
+	t_list	*start;
+	t_list	*tmp;
 
-	is_error = pthread_mutex_init(&fork, NULL);	
-	if (is_error)
-		handle_error("phtread_init");
-
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->philo_id = id;
-	new->fork = fork;
-	new->next = NULL;
-	return (new);
+	if (!lst)
+		return ;
+	start = *lst;
+	while (start)
+	{
+		tmp = start->next;
+		free(start);
+		start = tmp;
+	}
+	*lst = NULL;
 }

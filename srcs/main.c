@@ -6,58 +6,39 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:00:50 by motoko            #+#    #+#             */
-/*   Updated: 2023/09/27 17:14:45 by motoko           ###   ########.fr       */
+/*   Updated: 2023/09/29 17:46:09 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-	/*
-		if (!(philo_id % 2 == 0) && switch_stat)
-		{
-			printf("%d stat even => %s\n", philo_id, stat);
-			stat = "SLEEP";
-			printf("%d stat even => %s\n", philo_id, stat);
-			switch_stat = 0;
-		}
-		else 
-		{
-			printf("%d stat odd => %s\n", philo_id, stat);
-			stat = "EAT";
-			printf("%d stat odd => %s\n", philo_id, stat);
-			switch_stat = 1;
-		}
-		*/
-
 
 #include <philosophers.h>
 
 void	*routine(void *lst)
 {
-	pthread_mutex_t	*mutex;	
+	pthread_mutex_t	*fork;	
 	int		philo_id;
 	int		meal_nb;
-	time_t		sec;
-	suseconds_t	usec;
-	suseconds_t	diff_time;
 	char		*stat;
-	int i = 0;
-	int switch_stat = 1;
+	int 		i;
+	int 		switch_stat;
+	int		diff_time;
+	long long int	start_t;
 
+	switch_stat = 1;
+	i = 0;
 	philo_id = ((t_list *)lst)->philo_id;
 	stat = ((t_list *)lst)->stat;
 	meal_nb = ((t_list *)lst)->meal_nb;
-	mutex = ((t_list *)lst)->mutex;
-
-	usec = ((t_list *)lst)->usec;
+	fork = &((t_list *)lst)->fork;
+	start_t = ((t_list *)lst)->start_t;
 
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
+	printf("ADD2 == %ld\n", tv.tv_usec + tv.tv_usec / 1000);
 	
-	diff_time = tv.tv_usec;
-	printf("%d diff time %ld\n", philo_id, diff_time);
+	diff_time =  start_t - (tv.tv_usec + tv.tv_usec / 1000);
 	while (i < meal_nb)
 	{
-		pthread_mutex_lock(mutex);
-
+		pthread_mutex_lock(fork);
 		printf("v1 : %d stat even => %s\n", philo_id, stat);
 		if (!strcmp(stat, "SLEEP"))
 			stat = "EAT";
@@ -66,7 +47,7 @@ void	*routine(void *lst)
 		else 
 			printf("AAA");
 		printf("v2 : %d stat even => %s\n", philo_id, stat);
-			pthread_mutex_unlock(mutex);
+		pthread_mutex_unlock(fork);
 		i++;
 	}
 	return (NULL);
@@ -78,7 +59,7 @@ pthread_t	create_threads(t_list *lst)
 
 	while (lst)
 	{
-		is_error = pthread_create(&(lst->thread_id), NULL, &routine, (void *)lst);
+		is_error = pthread_create(&(lst->thread), NULL, &routine, (void *)lst);
 		if (is_error)
 			handle_error("pthread_create");
 		lst = lst->next;
@@ -86,14 +67,13 @@ pthread_t	create_threads(t_list *lst)
 	return (0);
 }
 
-
 pthread_t	join_threads(t_list *lst)
 {
 	int	is_error;
 
-	while (lst)	
+	while (lst)
 	{
-		is_error = pthread_join(lst->thread_id, NULL);
+		is_error = pthread_join(lst->thread, NULL);
 		if (is_error)
 			handle_error("pthread_join");
 		lst = lst->next;
@@ -101,48 +81,50 @@ pthread_t	join_threads(t_list *lst)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int	destroy_mutex(t_list *lst)
 {
-	t_list	*lst;
-	t_list	*new;
-	int	i;
-	int	is_error;
+	while (lst)
+	{
+		pthread_mutex_destroy(&(lst->fork));
+		lst = lst->next;
+	}
+	return (0);
+}
 
-	struct timeval tv;
+int	create_lst(t_list **lst, int argc, char **argv)
+{
+	t_list		*new;
+	int		i;
+	struct timeval	tv;
 
-
-	is_error = gettimeofday(&tv, NULL);
-	printf("gettineofday %d\n", is_error);
-	printf("tv_usec %ld\n", tv.tv_usec);
-
-	pthread_mutex_t mutex;
-	is_error = pthread_mutex_init(&mutex, NULL);
-	if (is_error)
-		handle_error("pthread_init");
+	gettimeofday(&tv, NULL);
 	i = 1;
 	while (argv[i])
 	{
 		new = ft_lstnew(i);
-		new->mutex = &mutex;
-		new->usec = tv.tv_usec;
 		new->meal_nb = 1;
+		printf("ADD1 == %ld\n", tv.tv_usec + tv.tv_usec / 1000);
+		new->start_t = tv.tv_usec + tv.tv_usec / 1000;
 		if (!(new->philo_id % 2 == 0))
-		{
-			printf("id => %d\n", new->philo_id);
 			new->stat = "EAT";
-		}
 		else 
-		{
-			printf("id => %d\n", new->philo_id);
 			new->stat = "SLEEP";
-		}
-		ft_lstadd_back(&lst, new);
+		ft_lstadd_back(lst, new);
 		i++;
 	}
-	lst->next->meal_nb = 3;
-	//print_lst(lst);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_list	*lst;
+
+	lst = NULL;
+	create_lst(&lst, argc, argv);
+	print_lst(lst);
 	create_threads(lst);
 	join_threads(lst);
-	pthread_mutex_destroy(&mutex);
+	destroy_mutex(lst);
+	ft_lstclear(&lst);
 	return (0);
 }
