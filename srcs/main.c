@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:00:50 by motoko            #+#    #+#             */
-/*   Updated: 2023/09/29 17:46:09 by motoko           ###   ########.fr       */
+/*   Updated: 2023/09/29 17:53:28 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	*routine(void *lst)
 	int 		switch_stat;
 	int		diff_time;
 	long long int	start_t;
+	struct timeval	tv;
 
 	switch_stat = 1;
 	i = 0;
@@ -31,10 +32,9 @@ void	*routine(void *lst)
 	fork = &((t_list *)lst)->fork;
 	start_t = ((t_list *)lst)->start_t;
 
-	struct timeval tv;
 	gettimeofday(&tv, NULL);
-	printf("ADD2 == %ld\n", tv.tv_usec + tv.tv_usec / 1000);
-	
+	printf("start_t : %ld\n", tv.tv_usec + tv.tv_usec / 1000);
+	((t_list *)lst)->start_t = tv.tv_usec + tv.tv_usec / 1000;
 	diff_time =  start_t - (tv.tv_usec + tv.tv_usec / 1000);
 	while (i < meal_nb)
 	{
@@ -95,16 +95,13 @@ int	create_lst(t_list **lst, int argc, char **argv)
 {
 	t_list		*new;
 	int		i;
-	struct timeval	tv;
 
-	gettimeofday(&tv, NULL);
 	i = 1;
 	while (argv[i])
 	{
 		new = ft_lstnew(i);
 		new->meal_nb = 1;
-		printf("ADD1 == %ld\n", tv.tv_usec + tv.tv_usec / 1000);
-		new->start_t = tv.tv_usec + tv.tv_usec / 1000;
+		new->start_t = 0;
 		if (!(new->philo_id % 2 == 0))
 			new->stat = "EAT";
 		else 
