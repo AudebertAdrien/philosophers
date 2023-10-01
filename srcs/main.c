@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:00:50 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/01 16:57:10 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/01 17:23:23 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	create_lst(t_vars *vars, int argc, char **argv)
 	while (argv[i])
 	{
 		new = ft_lstnew(i);
-		ft_lstadd_back(vars->philo_lst, new);
+		ft_lstadd_back(&(vars->philo_lst), new);
 		i++;
 	}
 
