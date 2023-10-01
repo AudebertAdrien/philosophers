@@ -6,7 +6,7 @@
 /*   By: aaudeber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:33:37 by aaudeber          #+#    #+#             */
-/*   Updated: 2023/09/29 17:52:45 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/01 16:20:09 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 t_list	*ft_lstnew(int id)
 {
 	t_list	*new;
-	pthread_mutex_t	fork;
+	pthread_mutex_t	fork_r;
 	int	is_error;
 
-	is_error = pthread_mutex_init(&fork, NULL);	
+	is_error = pthread_mutex_init(&fork_r, NULL);	
 	if (is_error)
 		handle_error("phtread_init");
 
@@ -26,7 +26,7 @@ t_list	*ft_lstnew(int id)
 	if (!new)
 		return (NULL);
 	new->philo_id = id;
-	new->fork = fork;
+	new->fork_r = fork_r;
 	new->next = NULL;
 	return (new);
 }

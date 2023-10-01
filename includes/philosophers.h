@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/09/29 17:36:51 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/01 16:39:58 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,22 @@
 #include <errno.h>
 #include <sys/time.h>
 
+typedef struct s_vars
+{
+	int		meal_nb;
+	int		philo_nb;
+}	t_vars;
+
 typedef struct s_list
 {
 	int		philo_id;
-	int		meal_nb;
-	long long int	start_t;
-	char		*stat;
 	pthread_t	thread;	
-	pthread_mutex_t	fork;
+	pthread_mutex_t	fork_r;
+	pthread_mutex_t	fork_l;
+
+	long long int	start_t;
 	struct s_list	*next;
+	t_vars		vars;	
 }	t_list;
 
 void	ft_bzero(void *s, size_t n);
