@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/01 16:39:58 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/01 16:56:57 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@
 #include <errno.h>
 #include <sys/time.h>
 
-typedef struct s_vars
-{
-	int		meal_nb;
-	int		philo_nb;
-}	t_vars;
-
 typedef struct s_list
 {
 	int		philo_id;
@@ -36,13 +30,22 @@ typedef struct s_list
 
 	long long int	start_t;
 	struct s_list	*next;
-	t_vars		vars;	
 }	t_list;
+
+typedef struct s_vars
+{
+	int		meal_nb;
+	int		philo_nb;
+
+	t_list		*philo_lst;	
+}	t_vars;
+
+//void	print_lst(t_list *lst);	
+void	handle_error(char *msg);
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
-void	print_lst(t_list *lst);	
-void	handle_error(char *msg);
+
 t_list	*ft_lstnew(int id);
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);

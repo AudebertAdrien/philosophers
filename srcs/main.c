@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:00:50 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/01 16:35:25 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/01 16:57:10 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 
 		//if (!(new->philo_id % 2 == 0))
 
+/*
 void	*routine(void *lst)
 {
 	pthread_mutex_t	*fork_r;	
@@ -113,7 +114,10 @@ int	destroy_mutex(t_list *lst)
 	return (0);
 }
 
-int	create_lst(t_list **lst, int argc, char **argv)
+
+*/
+
+int	create_lst(t_vars *vars, int argc, char **argv)
 {
 	t_list		*new;
 	int		i;
@@ -122,38 +126,34 @@ int	create_lst(t_list **lst, int argc, char **argv)
 	while (argv[i])
 	{
 		new = ft_lstnew(i);
-		new->vars.philo_nb = argc - 1;
-		if (!(new->philo_id % 2 == 0))
-			new->vars.meal_nb = 3;
-		else 
-			new->vars.meal_nb = 2;
-
-		ft_lstadd_back(lst, new);
+		ft_lstadd_back(vars->philo_lst, new);
 		i++;
 	}
 
 	return (0);
 }
 
-void	print_lst(t_list *lst)
+void	print_lst(t_vars *vars)
 {
+	t_list	*lst;
+	
+	lst = vars->philo_lst;
 	while (lst)
 	{
-		printf("id %d ==> meal %d\n", (lst)->philo_id, (lst)->vars.meal_nb);
-		lst = (lst)->next;
+		printf("id %d\n", lst->philo_id);
+		lst = lst->next;
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	t_list	*lst;
+	t_vars	vars;
 
-	lst = NULL;
-	create_lst(&lst, argc, argv);
-	create_threads(lst);
-	print_lst(lst);
-	join_threads(lst);
-	destroy_mutex(lst);
-	ft_lstclear(&lst);
+	create_lst(&vars, argc, argv);
+	print_lst(&vars);
+	//create_threads(vars);
+	//join_threads(vars);
+	//destroy_mutex(vars);
+	//ft_lstclear(vars);
 	return (0);
 }
