@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/01 16:56:57 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/01 18:12:22 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #include <errno.h>
 #include <sys/time.h>
 
+typedef struct s_vars t_vars;
+
 typedef struct s_list
 {
 	int		philo_id;
@@ -30,6 +32,7 @@ typedef struct s_list
 
 	long long int	start_t;
 	struct s_list	*next;
+	t_vars		*vars;
 }	t_list;
 
 typedef struct s_vars
