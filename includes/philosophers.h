@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/01 18:12:22 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/02 16:01:05 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct s_list
 {
 	int		philo_id;
 	pthread_t	thread;	
-	pthread_mutex_t	fork_r;
-	pthread_mutex_t	fork_l;
+	pthread_mutex_t	*fork_r;
+	//pthread_mutex_t	*fork_l;
 
 	long long int	start_t;
 	struct s_list	*next;

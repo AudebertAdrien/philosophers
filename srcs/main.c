@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:00:50 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/01 18:29:38 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/02 16:12:41 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,47 +36,46 @@
 
 		//if (!(new->philo_id % 2 == 0))
 
-void	*routine(void *lst)
-{
-	pthread_mutex_t	*fork_r;	
-	pthread_mutex_t	*fork_l;	
-	int		philo_id;
-	int 		i;
-	int 		switch_stat;
-	int		diff_time;
-	long long int	start_t;
+	/*
 	struct timeval	tv;
-
-	i = 0;
-	switch_stat = 1;
-
-	t_list		*philo;
-	int		meal_nb;
-
-	philo = (t_list *)lst;
-	meal_nb = philo->vars->meal_nb;
-
-	printf("nb %d\n", meal_nb);
-
-	philo_id = ((t_list *)lst)->philo_id;
-	fork_r = &((t_list *)lst)->fork_r;
-	if (philo_id == philo->vars->philo_nb)
-		fork_l = NULL;
-	else
-		fork_l = &((t_list *)lst)->next->fork_r;
-	
-
+	long long int	start_t;
 	gettimeofday(&tv, NULL);
 	start_t = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	printf("start_t : %lld\n" , start_t);
-	printf("id %d, f_r %p : f_l %p\n" ,philo_id, fork_r, fork_l);
+	printf("id %d, f_r %p : f_l %p\n" ,philo->philo_id, fork_r, fork_l);
+	*/
+	
+void	*routine(void *lst)
+{
+	t_list		*philo;
+	int		i;
 
-	while (i < meal_nb)
+	i = 0;
+	philo = (t_list *)lst;
+
+	pthread_mutex_lock(philo->fork_r);
+	//pthread_mutex_lock(philo->fork_l);
+	//pthread_mutex_lock(philo->next->fork_r);
+	printf("philo id : %d\n", philo->philo_id);
+	/*
+	if (philo->philo_id == philo->vars->philo_nb)
+		philo->fork_l = NULL;
+	else
+		philo->fork_l = philo->next->fork_r;
+	*/
+	pthread_mutex_unlock(philo->fork_r);
+	//pthread_mutex_unlock(philo->fork_l);
+	//pthread_mutex_unlock(philo->next->fork_r);
+
+
+	/*
+	while (i < philo->vars->meal_nb)
 	{
-		pthread_mutex_lock(fork_r);
-		pthread_mutex_unlock(fork_r);
+		pthread_mutex_lock((philo)->fork_r);
+		pthread_mutex_unlock((philo)->fork_r);
 		i++;
 	}
+	*/
 	return (NULL);
 }
 
@@ -119,8 +118,8 @@ int	destroy_mutex(t_vars *vars)
 	lst = vars->philo_lst;
 	while (lst)
 	{
-		pthread_mutex_destroy(&(lst->fork_r));
-		pthread_mutex_destroy(&(lst->fork_l));
+		pthread_mutex_destroy(lst->fork_r);
+	//	pthread_mutex_destroy(lst->fork_l);
 		lst = lst->next;
 	}
 	return (0);
@@ -136,7 +135,6 @@ int	create_lst(t_vars *vars, int argc, char **argv)
 	while (argv[i])
 	{
 		new = ft_lstnew(i);
-		new->vars = vars;
 		ft_lstadd_back(&(vars->philo_lst), new);
 		i++;
 	}

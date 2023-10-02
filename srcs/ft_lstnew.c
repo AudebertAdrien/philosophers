@@ -6,7 +6,7 @@
 /*   By: aaudeber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:33:37 by aaudeber          #+#    #+#             */
-/*   Updated: 2023/10/01 16:20:09 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/02 16:01:06 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list	*ft_lstnew(int id)
 	if (!new)
 		return (NULL);
 	new->philo_id = id;
-	new->fork_r = fork_r;
+	new->fork_r = &fork_r;
 	new->next = NULL;
 	return (new);
 }
