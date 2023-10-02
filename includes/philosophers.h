@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/02 16:01:05 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/02 18:26:15 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,22 @@
 #include <errno.h>
 #include <sys/time.h>
 
-typedef struct s_vars t_vars;
-
 typedef struct s_list
 {
 	int		philo_id;
 	pthread_t	thread;	
 	pthread_mutex_t	*fork_r;
 	//pthread_mutex_t	*fork_l;
-
-	long long int	start_t;
-	struct s_list	*next;
-	t_vars		*vars;
-}	t_list;
-
-typedef struct s_vars
-{
 	int		meal_nb;
 	int		philo_nb;
+	long long int	start_t;
+}	t_list;
 
-	t_list		*philo_lst;	
-}	t_vars;
-
-//void	print_lst(t_list *lst);	
+void	print_tab(t_list **tab);
 void	handle_error(char *msg);
-
+void	free_tab(void **tab);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
-
-t_list	*ft_lstnew(int id);
-t_list	*ft_lstlast(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstclear(t_list **lst);
 #endif
 
 // timestamp_in_ms X has taken a fork

@@ -5,165 +5,110 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 12:00:50 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/02 16:12:41 by motoko           ###   ########.fr       */
+/*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
+/*   Updated: 2023/10/02 18:25:46 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <philosophers.h>
+#include "philosophers.h"
 
-	/*
-		//printf("v1 : %d stat even => %s\n", philo_id, stat);
-		if (!strcmp(stat, "SLEEP"))
-		{
-			stat = "EAT";
-			sleep(5);
-			gettimeofday(&tv, NULL);
-			diff_time =  start_t - (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-			printf("diff time : %d\n", diff_time);
-		}
-		else if (!strcmp(stat, "EAT"))
-		{
-			stat = "SLEEP";
-			//usleep(2000);
-			//diff_time =  start_t - (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-			//printf("diff time : %d\n", diff_time);
-		}
-		else 
-			printf("AAA");
-		//printf("v2 : %d stat even => %s\n", philo_id, stat);
-		*/
-
-		//if (!(new->philo_id % 2 == 0))
-
-	/*
-	struct timeval	tv;
-	long long int	start_t;
-	gettimeofday(&tv, NULL);
-	start_t = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	printf("start_t : %lld\n" , start_t);
-	printf("id %d, f_r %p : f_l %p\n" ,philo->philo_id, fork_r, fork_l);
-	*/
-	
 void	*routine(void *lst)
 {
-	t_list		*philo;
-	int		i;
+	t_list	*philo;
+
+	philo = (t_list *)lst;
+	pthread_mutex_lock(philo->fork_r);
+	printf("philo %d\n", philo->philo_id);
+	pthread_mutex_unlock(philo->fork_r);
+}
+
+pthread_t	create_threads(t_list **tab)
+{
+	int	is_error;
+	int	i;
 
 	i = 0;
-	philo = (t_list *)lst;
-
-	pthread_mutex_lock(philo->fork_r);
-	//pthread_mutex_lock(philo->fork_l);
-	//pthread_mutex_lock(philo->next->fork_r);
-	printf("philo id : %d\n", philo->philo_id);
-	/*
-	if (philo->philo_id == philo->vars->philo_nb)
-		philo->fork_l = NULL;
-	else
-		philo->fork_l = philo->next->fork_r;
-	*/
-	pthread_mutex_unlock(philo->fork_r);
-	//pthread_mutex_unlock(philo->fork_l);
-	//pthread_mutex_unlock(philo->next->fork_r);
-
-
-	/*
-	while (i < philo->vars->meal_nb)
+	while (tab[i])
 	{
-		pthread_mutex_lock((philo)->fork_r);
-		pthread_mutex_unlock((philo)->fork_r);
-		i++;
-	}
-	*/
-	return (NULL);
-}
-
-pthread_t	create_threads(t_vars *vars)
-{
-	t_list		*lst;
-	int		is_error;
-
-	lst = vars->philo_lst;
-	while (lst)
-	{
-		is_error = pthread_create(&(lst->thread), NULL, &routine, (void *)lst);
+		is_error = pthread_create(&(tab[i]->thread), NULL, &routine, (void *)tab[i]);
 		if (is_error)
 			handle_error("Error : pthread_create");
-		lst = lst->next;
+		i++;
 	}
 	return (0);
 }
 
-pthread_t	join_threads(t_vars *vars)
+pthread_t	join_threads(t_list **tab)
 {
-	t_list	*lst;
 	int	is_error;
+	int	i;
 
-	lst = vars->philo_lst;
-	while (lst)
+	i = 0;
+	while (tab[i])
 	{
-		is_error = pthread_join(lst->thread, NULL);
+		is_error = pthread_join(tab[i]->thread, NULL);
 		if (is_error)
-			handle_error("Error : pthread_join");
-		lst = lst->next;
-	}	
-	return (0);
-}
-
-int	destroy_mutex(t_vars *vars)
-{
-	t_list	*lst;
-
-	lst = vars->philo_lst;
-	while (lst)
-	{
-		pthread_mutex_destroy(lst->fork_r);
-	//	pthread_mutex_destroy(lst->fork_l);
-		lst = lst->next;
+			handle_error("Error : pthread_create");
+		i++;
 	}
 	return (0);
 }
 
-int	create_lst(t_vars *vars, int argc, char **argv)
+int	assign_mutex(t_list *new)
+{
+	pthread_mutex_t	fork_r;
+	int		is_error;
+
+	is_error = pthread_mutex_init(new->fork_r, NULL);
+	if (is_error)
+		handle_error("error : pthread_mutex_init\n");
+	return (0);
+}
+
+int	create_tab(t_list **tab, int argc, char **argv)
 {
 	t_list		*new;
 	int		i;
 
-	i = 1;
-	vars->philo_lst = NULL;
-	while (argv[i])
+	i = 0;
+	while (argv[i + 1])
 	{
-		new = ft_lstnew(i);
-		ft_lstadd_back(&(vars->philo_lst), new);
+		new = (t_list *)ft_calloc(1, sizeof(t_list));
+		if (!new)
+			return (0);
+		new->philo_id = i + 1;
+		new->meal_nb = 5;
+		assign_mutex(tab[i]);
+		tab[i] = new;
+		i++;
+	}
+	tab[i] = NULL;
+	return (0);
+}
+
+int	destroy_mutex(t_list **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		pthread_mutex_destroy(tab[i]->fork_r);
 		i++;
 	}
 	return (0);
 }
 
-void	print_lst(t_vars *vars)
-{
-	t_list	*lst;
-	
-	lst = vars->philo_lst;
-	while (lst)
-	{
-		printf("id %d\n", lst->philo_id);
-		lst = lst->next;
-	}
-}
-
 int	main(int argc, char **argv)
 {
-	t_vars	vars;
+	t_list	**tab;
 
-	vars.meal_nb = 3;
-	vars.philo_nb = argc - 1;
-	create_lst(&vars, argc, argv);
-	print_lst(&vars);
-	create_threads(&vars);
-	join_threads(&vars);
-	destroy_mutex(&vars);
-	ft_lstclear(&(vars.philo_lst));
+	tab = ft_calloc(argc, sizeof(t_list));
+	create_tab(tab, argc, argv);
+	print_tab(tab);
+	create_threads(tab);
+	join_threads(tab);
+	destroy_mutex(tab);
+	free_tab((void *)tab);
 	return (0);
 }
