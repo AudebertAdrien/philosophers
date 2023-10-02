@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/02 18:26:15 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/02 19:01:22 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_list
 {
 	int		philo_id;
 	pthread_t	thread;	
-	pthread_mutex_t	*fork_r;
+	pthread_mutex_t	fork_r;
 	//pthread_mutex_t	*fork_l;
 	int		meal_nb;
 	int		philo_nb;

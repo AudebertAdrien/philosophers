@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/02 18:25:46 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/02 19:06:08 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	*routine(void *lst)
 	t_list	*philo;
 
 	philo = (t_list *)lst;
-	pthread_mutex_lock(philo->fork_r);
+	pthread_mutex_lock(&(philo->fork_r));
 	printf("philo %d\n", philo->philo_id);
-	pthread_mutex_unlock(philo->fork_r);
+	pthread_mutex_unlock(&(philo->fork_r));
 }
 
 pthread_t	create_threads(t_list **tab)
@@ -59,19 +59,19 @@ int	assign_mutex(t_list *new)
 	pthread_mutex_t	fork_r;
 	int		is_error;
 
-	is_error = pthread_mutex_init(new->fork_r, NULL);
+	is_error = pthread_mutex_init(&(new->fork_r), NULL);
 	if (is_error)
 		handle_error("error : pthread_mutex_init\n");
 	return (0);
 }
 
-int	create_tab(t_list **tab, int argc, char **argv)
+int	create_tab(t_list **tab, int size)
 {
 	t_list		*new;
 	int		i;
 
 	i = 0;
-	while (argv[i + 1])
+	while (i < size)
 	{
 		new = (t_list *)ft_calloc(1, sizeof(t_list));
 		if (!new)
@@ -93,7 +93,7 @@ int	destroy_mutex(t_list **tab)
 	i = 0;
 	while (tab[i])
 	{
-		pthread_mutex_destroy(tab[i]->fork_r);
+		pthread_mutex_destroy(&(tab[i]->fork_r));
 		i++;
 	}
 	return (0);
@@ -103,12 +103,12 @@ int	main(int argc, char **argv)
 {
 	t_list	**tab;
 
-	tab = ft_calloc(argc, sizeof(t_list));
-	create_tab(tab, argc, argv);
-	print_tab(tab);
+	tab = ft_calloc(5, sizeof(t_list));
+	create_tab(tab, 4);
+	//print_tab(tab);
 	create_threads(tab);
 	join_threads(tab);
-	destroy_mutex(tab);
+	//destroy_mutex(tab);
 	free_tab((void *)tab);
 	return (0);
 }
