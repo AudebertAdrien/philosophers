@@ -6,44 +6,35 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:07:58 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/02 17:46:02 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/03 19:01:39 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_tab(t_list **tab)
+void	print_tab(t_vars *vars)
 {
 	int	i;
+
 	i = 0;
-	while (tab[i])
+	while (i < vars->philo_nb)
 	{
-		printf("id %d\n", tab[i]->philo_id);
+		printf("id %d\n", vars->philo_lst[i].philo_id);
 		i++;
 	}
 }
 
-void	free_tab(void **tab)
+void	free_forks(t_vars *vars)
 {
 	int	i;
 
-	if (!tab)
-		return ;
-	if (!*tab)
-	{
-		free(tab);
-		tab = NULL;
-		return ;
-	}
 	i = 0;
-	while (tab[i])
+	while (i < vars->philo_nb)
 	{
-		free(tab[i]);
-		tab[i] = NULL;
+		free(vars->philo_lst[i].fork_r);
+		vars->philo_lst[i].fork_r = NULL;
 		i++;
 	}
-	free(tab);
-	tab = NULL;
 }
 
 int	ft_strlen(char *s)
