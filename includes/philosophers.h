@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/08 15:54:35 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/08 16:01:53 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ int	free_data(t_vars *vars);
 
 int	create_tab(t_vars *vars);
 int	create_mutex_tab(t_vars *vars);
+pthread_t	create_threads(t_vars *vars);
+pthread_t	join_threads(t_vars *vars);
 
+void	*routine(void *data);
+void	action(t_list *philo, char *str);
 int	thinking(t_list *philo);
 int	eating(t_list *philo);
 int	sleeping(t_list *philo);

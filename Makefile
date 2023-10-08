@@ -13,6 +13,8 @@ OBJ_DIR		= obj
 
 SRCS		= main.c \
 		  init_data.c \
+		  threads.c\
+		  routine.c \
 		  utils.c \
 		  free_data.c \
 		  ft_bzero.c \
