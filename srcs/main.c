@@ -6,46 +6,52 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/03 19:09:26 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/08 15:24:25 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	thinking(t_list *philo)
+void	action(t_list *philo, char *str)
 {
 	struct timeval	tv;
 	long long int	diff_time;
 
 	gettimeofday(&tv, NULL);
 	diff_time =  (tv.tv_sec * 1000 + tv.tv_usec / 1000) - philo->start_t;
-	printf("%lld ms %d is thinking\n", diff_time, philo->philo_id);	
-	sleep(2);
-	eating(philo);
+	printf("%lld ms %d is %s\n", diff_time, philo->philo_id, str);	
 }
 
-void	eating(t_list *philo)
+int	eating(t_list *philo)
 {
-	struct timeval	tv;
-	long long int	diff_time;
+	pthread_mutex_lock(philo->fork_r);
+	pthread_mutex_lock(philo->fork_l);
+	
+	printf("id %d, meal %d\n",philo->philo_id, philo->meal_nb);
+	if (philo->meal_nb == 0)
+		return (0);
+	action(philo, "eating");
+	philo->meal_nb -= 1;
 
-	gettimeofday(&tv, NULL);
-	diff_time =  (tv.tv_sec * 1000 + tv.tv_usec / 1000) - philo->start_t;
-	printf("%lld ms %d is eating\n", diff_time, philo->philo_id);	
-	sleep(2);
-	sleeping(philo);
+	pthread_mutex_unlock(philo->fork_r);
+	pthread_mutex_unlock(philo->fork_l);
+
+	usleep(TIME);
+	return (0);
 }
 
-void	sleeping(t_list *philo)
+int	sleeping(t_list *philo)
 {
-	struct timeval	tv;
-	long long int	diff_time;
+	action(philo, "sleeping");
+	usleep(TIME);
+	return (0);
+}
 
-	gettimeofday(&tv, NULL);
-	diff_time =  (tv.tv_sec * 1000 + tv.tv_usec / 1000) - philo->start_t;
-	printf("%lld ms %d is sleeping\n", diff_time, philo->philo_id);	
-	sleep(2);
-	//thinking(philo);
+int	thinking(t_list *philo)
+{
+	action(philo, "thinking");
+	usleep(TIME);
+	return (0);
 }
 
 void	*routine(void *data)
@@ -55,16 +61,16 @@ void	*routine(void *data)
 	struct timeval	tv;
 	long long int	start_t;
 
-	gettimeofday(&tv, NULL);
 	philo = (t_list *)data;
+	gettimeofday(&tv, NULL);
 
-	pthread_mutex_lock(philo->fork_r);
 	start_t = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	philo->start_t = start_t;
 	printf("start_t : %lld\n" , philo->start_t);
 	
+	eating(philo);
+	sleeping(philo);
 	thinking(philo);
-	pthread_mutex_unlock(philo->fork_r);
 }
 
 pthread_t	create_threads(t_vars *vars)
@@ -108,24 +114,11 @@ int	destroy_mutex(t_vars *vars)
 	i = 0;
 	while (i < vars->philo_nb)
 	{
-		is_error = pthread_mutex_destroy(vars->philo_lst[i].fork_r);
+		is_error = pthread_mutex_destroy(&vars->fork_tab[i]);
 		if (is_error)
 			handle_error("error : pthread_mutex_destroy\n");
 		i++;
 	}
-	return (0);
-}
-
-int	assign_mutex(t_list *new)
-{
-	pthread_mutex_t	*fork_r;
-	int		is_error;
-
-	fork_r = malloc(sizeof(pthread_mutex_t));
-	is_error = pthread_mutex_init(fork_r, NULL);
-	if (is_error)
-		handle_error("error : pthread_mutex_init\n");
-	new->fork_r = fork_r;
 	return (0);
 }
 
@@ -137,7 +130,30 @@ int	create_tab(t_vars *vars)
 	while (i < vars->philo_nb)
 	{
 		vars->philo_lst[i].philo_id = i + 1;
-		assign_mutex(&vars->philo_lst[i]);
+		vars->philo_lst[i].vars = vars;
+		vars->philo_lst[i].meal_nb = 4;
+		vars->philo_lst[i].fork_r = &vars->fork_tab[i];
+		if (i + 1 != vars->philo_nb)
+			vars->philo_lst[i].fork_l = &vars->fork_tab[i + 1];
+		else
+			vars->philo_lst[i].fork_l = &vars->fork_tab[0];
+		i++;
+	}
+	return (0);
+}
+
+int	create_mutex_tab(t_vars *vars)
+{
+	int	is_error;
+	int	i;
+
+	i = 0;
+	vars->fork_tab = ft_calloc(vars->philo_nb, sizeof(pthread_mutex_t));
+	while (i < vars->philo_nb)
+	{
+		is_error = pthread_mutex_init(&vars->fork_tab[i], NULL);
+		if (is_error)
+			handle_error("error : pthread_mutex_init\n");
 		i++;
 	}
 	return (0);
@@ -149,13 +165,13 @@ int	main(int argc, char **argv)
 
 	vars.philo_nb = 4;
 	vars.philo_lst = ft_calloc(5, sizeof(t_list));
+	create_mutex_tab(&vars);
 	create_tab(&vars);
 	print_tab(&vars);
 	create_threads(&vars);
 	join_threads(&vars);
 	destroy_mutex(&vars);
-	free_forks(&vars);
-	free(vars.philo_lst);
-	vars.philo_lst = NULL;
+	free(vars.fork_tab);
+	vars.fork_tab = NULL;
 	return (0);
 }

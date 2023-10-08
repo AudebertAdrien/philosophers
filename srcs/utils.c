@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:07:58 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/03 19:01:39 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/08 15:23:25 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,6 @@ void	print_tab(t_vars *vars)
 	while (i < vars->philo_nb)
 	{
 		printf("id %d\n", vars->philo_lst[i].philo_id);
-		i++;
-	}
-}
-
-void	free_forks(t_vars *vars)
-{
-	int	i;
-
-	i = 0;
-	while (i < vars->philo_nb)
-	{
-		free(vars->philo_lst[i].fork_r);
-		vars->philo_lst[i].fork_r = NULL;
 		i++;
 	}
 }
