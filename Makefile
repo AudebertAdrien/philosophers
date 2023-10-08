@@ -12,7 +12,9 @@ VPATH		= srcs
 OBJ_DIR		= obj
 
 SRCS		= main.c \
+		  init_data.c \
 		  utils.c \
+		  free_data.c \
 		  ft_bzero.c \
 		  ft_calloc.c \
 

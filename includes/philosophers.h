@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/08 14:57:33 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/08 15:54:35 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,18 @@ struct s_vars
 	t_list		*philo_lst;
 };
 
-void	print_tab(t_vars *vars);
-void	handle_error(char *msg);
-void	free_forks(t_vars *vars);
-
+void	ft_putstr(char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
+
+void	print_tab(t_vars *vars);
+
+void	handle_error(char *msg);
+int	destroy_mutex(t_vars *vars);
+int	free_data(t_vars *vars);
+
+int	create_tab(t_vars *vars);
+int	create_mutex_tab(t_vars *vars);
 
 int	thinking(t_list *philo);
 int	eating(t_list *philo);

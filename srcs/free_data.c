@@ -1,41 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 17:07:58 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/08 15:53:21 by motoko           ###   ########.fr       */
+/*   Created: 2023/10/08 15:39:11 by motoko            #+#    #+#             */
+/*   Updated: 2023/10/08 15:52:33 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_tab(t_vars *vars)
+int	destroy_mutex(t_vars *vars)
 {
 	int	i;
+	int	is_error;
 
 	i = 0;
 	while (i < vars->philo_nb)
 	{
-		printf("id %d\n", vars->philo_lst[i].philo_id);
+		is_error = pthread_mutex_destroy(&vars->fork_tab[i]);
+		if (is_error)
+			handle_error("error : pthread_mutex_destroy\n");
 		i++;
 	}
+	return (0);
 }
 
-int	ft_strlen(char *s)
+void	handle_error(char *msg)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	ft_putstr(msg);
+	exit(EXIT_FAILURE);
 }
 
-void	ft_putstr(char *str)
+int	free_data(t_vars *vars)
 {
-	write(1, str, ft_strlen(str));
-	write(1, "\n", 1);
+	free(vars->fork_tab);
+	vars->fork_tab = NULL;
+	return (0);
 }
