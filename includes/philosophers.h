@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/08 16:01:53 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/09 15:41:03 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 #include <errno.h>
 #include <sys/time.h>
 
-#define	TIME 100000
+#define	TIME_EAT 500000
+#define	TIME_SLEEP 3000
 
 typedef struct s_vars t_vars;
 
@@ -60,9 +61,9 @@ pthread_t	join_threads(t_vars *vars);
 
 void	*routine(void *data);
 void	action(t_list *philo, char *str);
-int	thinking(t_list *philo);
-int	eating(t_list *philo);
-int	sleeping(t_list *philo);
+void	thinking(t_list *philo);
+void	eating(t_list *philo);
+void	sleeping(t_list *philo);
 #endif
 
 // timestamp_in_ms X has taken a fork

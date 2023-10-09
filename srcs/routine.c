@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:55:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/08 15:59:32 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/09 15:40:58 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,35 @@ void	action(t_list *philo, char *str)
 	printf("%lld ms %d is %s\n", diff_time, philo->philo_id, str);	
 }
 
-int	eating(t_list *philo)
+void	eating(t_list *philo)
 {
+
+	action(philo, "BEFORE");
 	pthread_mutex_lock(philo->fork_r);
 	pthread_mutex_lock(philo->fork_l);
-	
-	printf("id %d, meal %d\n",philo->philo_id, philo->meal_nb);
-	if (philo->meal_nb == 0)
-		return (0);
+	printf("id %d TAKE fork\n",philo->philo_id);
+	printf("id %d, MEAL %d\n",philo->philo_id, philo->meal_nb);
 	action(philo, "eating");
 	philo->meal_nb -= 1;
 
+	usleep(TIME_EAT);
 	pthread_mutex_unlock(philo->fork_r);
 	pthread_mutex_unlock(philo->fork_l);
+	printf("id %d DROP fork\n",philo->philo_id);
+	action(philo, "AFTER");
 
-	usleep(TIME);
-	return (0);
 }
 
-int	sleeping(t_list *philo)
+void	sleeping(t_list *philo)
 {
 	action(philo, "sleeping");
-	usleep(TIME);
-	return (0);
+	usleep(TIME_SLEEP);
 }
 
-int	thinking(t_list *philo)
+void	thinking(t_list *philo)
 {
 	action(philo, "thinking");
-	usleep(TIME);
-	return (0);
+	//usleep(TIME);
 }
 
 void	*routine(void *data)
@@ -68,7 +67,10 @@ void	*routine(void *data)
 	philo->start_t = start_t;
 	printf("start_t : %lld\n" , philo->start_t);
 	
-	eating(philo);
-	sleeping(philo);
-	thinking(philo);
+	while (1)
+	{
+		eating(philo);
+		sleeping(philo);
+		thinking(philo);
+	}
 }

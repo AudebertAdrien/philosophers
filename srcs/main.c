@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/08 16:03:10 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/09 15:16:16 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_vars	vars;
 
-	vars.philo_nb = 4;
+	vars.philo_nb = 5;
 	vars.philo_lst = ft_calloc(5, sizeof(t_list));
 	create_mutex_tab(&vars);
 	create_tab(&vars);
