@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/09 15:41:03 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:08:14 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,23 @@ typedef struct s_list
 struct s_vars
 {
 	int		philo_nb;
+	int		error;
+	char		*bad_arg;
 	pthread_mutex_t	*fork_tab;
 	t_list		*philo_lst;
 };
 
+int	is_valid_number(t_vars *vars, char *nptr);
+size_t	ft_strlen(const char *str);
+char	*ft_strdup(const char *s);
+int	ft_atoi(t_vars *vars, const char *nptr);
 void	ft_putstr(char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 
 void	print_tab(t_vars *vars);
 
-void	handle_error(char *msg);
+int	handle_error(char *msg, char *arg);
 int	destroy_mutex(t_vars *vars);
 int	free_data(t_vars *vars);
 

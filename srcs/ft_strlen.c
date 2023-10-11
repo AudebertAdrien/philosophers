@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aaudeber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 17:07:58 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/11 15:56:21 by motoko           ###   ########.fr       */
+/*   Created: 2023/02/02 12:05:27 by aaudeber          #+#    #+#             */
+/*   Updated: 2023/10/11 15:54:42 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_tab(t_vars *vars)
+size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (i < vars->philo_nb)
-	{
-		printf("id %d\n", vars->philo_lst[i].philo_id);
+	while (str[i])
 		i++;
-	}
-}
-
-void	ft_putstr(char *str)
-{
-	write(1, str, ft_strlen(str));
-	write(1, "\n", 1);
+	return (i);
 }

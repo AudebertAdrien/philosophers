@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aaudeber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 17:07:58 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/11 15:56:21 by motoko           ###   ########.fr       */
+/*   Created: 2023/02/08 14:25:44 by aaudeber          #+#    #+#             */
+/*   Updated: 2023/10/11 15:52:43 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_tab(t_vars *vars)
+char	*ft_strdup(const char *s)
 {
-	int	i;
+	char	*ptr;
+	int		size;
+	int		i;
 
 	i = 0;
-	while (i < vars->philo_nb)
+	size = ft_strlen(s);
+	ptr = (char *)malloc((sizeof(char) * size + 1));
+	if (!ptr)
+		return (NULL);
+	while (i < size)
 	{
-		printf("id %d\n", vars->philo_lst[i].philo_id);
+		ptr[i] = s[i];
 		i++;
 	}
-}
-
-void	ft_putstr(char *str)
-{
-	write(1, str, ft_strlen(str));
-	write(1, "\n", 1);
+	ptr[i] = '\0';
+	return (ptr);
 }

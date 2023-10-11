@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_data.c                                        :+:      :+:    :+:   */
+/*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/08 15:39:11 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/11 16:10:37 by motoko           ###   ########.fr       */
+/*   Created: 2023/10/11 15:17:56 by motoko            #+#    #+#             */
+/*   Updated: 2023/10/11 16:07:51 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	free_data(t_vars *vars)
-{
-	free(vars->fork_tab);
-	vars->fork_tab = NULL;
-	return (0);
-}
-
-int	destroy_mutex(t_vars *vars)
+int	is_valid_number(t_vars *vars, char *nptr)
 {
 	int	i;
-	int	is_error;
 
 	i = 0;
-	while (i < vars->philo_nb)
+	while (nptr[i])
 	{
-		is_error = pthread_mutex_destroy(&vars->fork_tab[i]);
-		if (is_error)
-			handle_error("Error : pthread_mutex_destroy\n", NULL);
+		if (i > 0 && nptr[i] == '-')
+		{
+			vars->bad_arg = nptr;
+			return (1);
+		}
 		i++;
 	}
 	return (0);

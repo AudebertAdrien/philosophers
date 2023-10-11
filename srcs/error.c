@@ -1,36 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_data.c                                        :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/08 15:39:11 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/11 16:10:37 by motoko           ###   ########.fr       */
+/*   Created: 2023/10/11 16:10:12 by motoko            #+#    #+#             */
+/*   Updated: 2023/10/11 16:11:00 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	free_data(t_vars *vars)
+int	handle_error(char *msg, char *arg)
 {
-	free(vars->fork_tab);
-	vars->fork_tab = NULL;
-	return (0);
-}
-
-int	destroy_mutex(t_vars *vars)
-{
-	int	i;
-	int	is_error;
-
-	i = 0;
-	while (i < vars->philo_nb)
-	{
-		is_error = pthread_mutex_destroy(&vars->fork_tab[i]);
-		if (is_error)
-			handle_error("Error : pthread_mutex_destroy\n", NULL);
-		i++;
-	}
+	printf("%s : %s\n", msg, arg);
 	return (0);
 }

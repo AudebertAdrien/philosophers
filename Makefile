@@ -12,13 +12,19 @@ VPATH		= srcs
 OBJ_DIR		= obj
 
 SRCS		= main.c \
+		  check_args.c \
 		  init_data.c \
 		  threads.c\
 		  routine.c \
 		  utils.c \
+		  error.c \
 		  free_data.c \
+		  ft_strlen.c \
+		  ft_strdup.c \
+		  ft_atoi.c \
 		  ft_bzero.c \
 		  ft_calloc.c \
+		  ft_atoi.c \
 
 OBJS		= $(addprefix obj/, $(SRCS:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:02:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/08 16:02:56 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:06:31 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ pthread_t	create_threads(t_vars *vars)
 		is_error = pthread_create(&(vars->philo_lst[i]).thread,
 				NULL, &routine, &vars->philo_lst[i]);
 		if (is_error)
-			handle_error("error : pthread_create");
+			handle_error("Error : pthread_create", NULL);
 		i++;
 	}
 	return (0);
@@ -39,7 +39,7 @@ pthread_t	join_threads(t_vars *vars)
 	{
 		is_error = pthread_join(vars->philo_lst[i].thread, NULL);
 		if (is_error)
-			handle_error("error : pthread_create");
+			handle_error("Error : pthread_create", NULL);
 		i++;
 	}
 	return (0);
