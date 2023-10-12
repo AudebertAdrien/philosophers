@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:35:08 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/11 16:05:15 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/12 15:20:00 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	create_tab(t_vars *vars)
 	{
 		vars->philo_lst[i].philo_id = i + 1;
 		vars->philo_lst[i].vars = vars;
-		vars->philo_lst[i].meal_nb = 4;
 		assign_mutex(vars, &i);
 		i++;
 	}

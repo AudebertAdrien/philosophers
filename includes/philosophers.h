@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/12 14:36:40 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/12 15:21:31 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_list
 	pthread_mutex_t	*fork_r;
 	pthread_mutex_t	*fork_l;
 	long long int	start_t;
-	int		meal_nb;
+	int		meal_eaten;
 	t_vars		*vars;
 }	t_list;
 
@@ -43,6 +43,7 @@ struct s_vars
 	int		tt_d;
 	int		tt_e;
 	int		tt_s;
+	int		meal_count;
 	int		error;
 	char		*bad_arg;
 	pthread_mutex_t	*fork_tab;

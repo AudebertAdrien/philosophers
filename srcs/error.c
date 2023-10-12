@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 16:10:12 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/11 16:11:00 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/12 15:25:05 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	handle_error(char *msg, char *arg)
 {
 	printf("%s : %s\n", msg, arg);
-	return (0);
+	return (1);
 }

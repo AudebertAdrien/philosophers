@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:55:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/11 15:51:25 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/12 15:20:26 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	eating(t_list *philo)
 	pthread_mutex_lock(philo->fork_r);
 	pthread_mutex_lock(philo->fork_l);
 	printf("ID %d TAKE fork\n",philo->philo_id);
-	printf("ID %d, MEAL %d\n",philo->philo_id, philo->meal_nb);
+	printf("ID %d, MEAL %d\n",philo->philo_id, philo->meal_eaten);
 
 	action(philo, "eating");
-	philo->meal_nb -= 1;
+	philo->meal_eaten += 1;
 
 	usleep(TIME_EAT);
 	pthread_mutex_unlock(philo->fork_r);
