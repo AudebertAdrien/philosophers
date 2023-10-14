@@ -3,8 +3,8 @@ NAME		= a.out
 CC		= gcc -g -lpthread
 CFLAGS		= -Wall -Wextra
 
-#VG_FLAGS	= --tool=drd 
-VG_FLAgS	= --tool=helgrind 
+VG_FLAGS	= --tool=drd 
+#VG_FLAgS	= --tool=helgrind 
 
 INC		= ./includes
 
@@ -35,7 +35,7 @@ mkdir:
 
 vg:
 	@echo "Valgrind Philophers"
-	valgrind $(VG_FLAGS) ./$(NAME)
+	valgrind $(VG_FLAGS) ./$(NAME) 5 500 100 100
 
 obj/%.o: %.c  mkdir
 	$(CC) $(CLAGS) -I$(INC) -c $< -o $@

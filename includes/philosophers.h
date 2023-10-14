@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/12 15:21:31 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:06:50 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 #include <pthread.h>
 #include <errno.h>
 #include <sys/time.h>
-
-#define	TIME_EAT 500000
-#define	TIME_SLEEP 3000
 
 typedef struct s_vars t_vars;
 

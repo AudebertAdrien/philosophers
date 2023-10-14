@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:17:56 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/12 14:18:48 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/14 16:08:59 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_valid_number(t_vars *vars, char *nptr)
 	i = 0;
 	while (nptr[i])
 	{
-		if (i > 0 && nptr[i] == '-')
+		if (nptr[i] == '-')
 		{
 			vars->bad_arg = nptr;
 			return (1);
