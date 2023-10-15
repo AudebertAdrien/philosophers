@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/14 16:01:24 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/15 13:59:24 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	init_data(t_vars *vars,int argc, char **argv)
 {
 	int	(*func)(t_vars *, int *, char *) = assign_value;
 
-	if (argc < 5 || argc > 6)
-		return (handle_error("Error : Not enough arguments", "Should be 4 or 5"));
+	if (argc != 5 && argc != 6)
+		return (handle_error("Error : Not enough arguments\n Should be 4 or 5"));
 	vars->error = 0;
 	func(vars, &vars->philo_nb, argv[1]);
 	func(vars, &vars->tt_d, argv[2]);

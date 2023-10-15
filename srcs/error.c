@@ -6,14 +6,14 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 16:10:12 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/14 14:03:42 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/15 13:59:48 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	handle_error(char *msg, char *arg)
+int	handle_error(char *msg)
 {
-	printf("%s : %s\n", msg, arg);
+	printf("%s\n", msg);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:39:11 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/14 13:59:33 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/15 14:03:21 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ int	destroy_mutex(t_vars *vars)
 	i = 0;
 	while (i < vars->philo_nb)
 	{
-		is_error = pthread_mutex_destroy(&vars->fork_tab[i]);
-		if (is_error)
-			handle_error("Error : pthread_mutex_destroy\n", NULL);
+		if (pthread_mutex_destroy(&vars->fork_tab[i]))
+			return (handle_error("Error : pthread_mutex_destroy\n"));
 		i++;
 	}
+	if (pthread_mutex_destroy(&vars->printf_m))
+		handle_error("Error : pthread_mutex_destroy\n");
 	return (0);
 }

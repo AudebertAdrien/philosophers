@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/14 14:06:50 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/15 14:00:08 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct s_list
 {
 	int		philo_id;
 	pthread_t	thread;	
-	pthread_mutex_t	*fork_r;
-	pthread_mutex_t	*fork_l;
+	int		fork_r;
+	int		fork_l;
 	long long int	start_t;
 	int		meal_eaten;
 	t_vars		*vars;
@@ -44,6 +44,7 @@ struct s_vars
 	int		error;
 	char		*bad_arg;
 	pthread_mutex_t	*fork_tab;
+	pthread_mutex_t	printf_m;
 	t_list		*philo_lst;
 };
 
@@ -55,9 +56,10 @@ void	ft_putstr(char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 
+void	printf_action(t_vars *vars, int id, char *str);
 void	print_tab(t_vars *vars);
 
-int	handle_error(char *msg, char *arg);
+int	handle_error(char *msg);
 int	destroy_mutex(t_vars *vars);
 int	free_data(t_vars *vars);
 
@@ -68,14 +70,7 @@ pthread_t	join_threads(t_vars *vars);
 
 void	*routine(void *data);
 void	action(t_list *philo, char *str);
-void	thinking(t_list *philo);
-void	eating(t_list *philo);
+void	eating(t_vars *vars, t_list *philo);
 void	sleeping(t_list *philo);
+void	thinking(t_list *philo);
 #endif
-
-// timestamp_in_ms X has taken a fork
-// timestamp_in_ms X is eating
-// timestamp_in_ms X is sleeping
-// timestamp_in_ms X is thinking
-// timestamp_in_ms X died
-//#define time_msg(msg) ft_putstr(msg)

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:17:56 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/14 16:08:59 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/15 14:00:29 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_args(t_vars *vars, char **argv)
 	while (argv[i])
 	{
 		if (is_valid_number(vars, argv[i]))
-			return (handle_error("Error : Not a valid number", vars->bad_arg));
+			return (handle_error("Error : Not a valid number"));
 		i++;
 	}
 	return (0);
