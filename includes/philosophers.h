@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/15 14:00:08 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/16 17:57:04 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ pthread_t	join_threads(t_vars *vars);
 
 void	*routine(void *data);
 void	action(t_list *philo, char *str);
-void	eating(t_vars *vars, t_list *philo);
-void	sleeping(t_list *philo);
-void	thinking(t_list *philo);
+int	eating(t_vars *vars, t_list *philo);
+int	sleeping(t_vars *vars, t_list *philo);
+int	thinking(t_vars *vars, t_list *philo);
 #endif

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:35:08 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/15 14:02:40 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/16 19:25:24 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	create_tab(t_vars *vars)
 	i = 0;
 	while (i < vars->philo_nb)
 	{
+		vars->philo_lst[i].meal_eaten = 0;
 		vars->philo_lst[i].philo_id = i + 1;
 		vars->philo_lst[i].vars = vars;
 		vars->philo_lst[i].fork_r = i;

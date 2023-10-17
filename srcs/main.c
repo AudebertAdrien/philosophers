@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/15 13:59:24 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/17 11:39:08 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ int	main(int argc, char **argv)
 		return (0);
 	if (init_data(&vars, argc, argv))
 		return (0);
-
 	create_mutex_tab(&vars);
 	create_tab(&vars);
-	print_tab(&vars);
 	create_threads(&vars);
 	join_threads(&vars);
 	destroy_mutex(&vars);
