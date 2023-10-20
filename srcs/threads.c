@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:02:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/15 14:03:00 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/20 16:36:05 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,25 @@ pthread_t	create_threads(t_vars *vars)
 	return (0);
 }
 
+void	death_checker(t_vars *vars, t_list *philo_lst)
+{
+	int	is_dead = 0;
+	int	i = 0;
+
+	while(1)	
+	{
+		while (i < vars->philo_nb)
+		{
+			if (time_diff(philo_lst[i].last_meal, timestamp()) > vars->tt_d)
+			{
+				printf_action(vars, philo_lst[i].philo_id, "DEAD");	
+				return ;
+			}
+			i++;
+		}
+	}
+}
+
 pthread_t	join_threads(t_vars *vars)
 {
 	int	is_error;
@@ -42,5 +61,6 @@ pthread_t	join_threads(t_vars *vars)
 			handle_error("Error : pthread_create");
 		i++;
 	}
+	death_checker(vars, vars->philo_lst);
 	return (0);
 }

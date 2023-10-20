@@ -28,6 +28,10 @@ SRCS		= main.c \
 
 OBJS		= $(addprefix obj/, $(SRCS:.c=.o))
 
+ifeq ($(DEBUG), 1)
+CFLAG	+= fsanitze=thread
+endif
+
 all: $(NAME)
 
 mkdir:
@@ -35,7 +39,7 @@ mkdir:
 
 vg:
 	@echo "Valgrind Philophers"
-	valgrind $(VG_FLAGS) ./$(NAME) 5 500 100 100 3
+	valgrind $(VG_FLAGS) ./$(NAME) 3 100 100 100 2
 
 obj/%.o: %.c  mkdir
 	$(CC) $(CLAGS) -I$(INC) -c $< -o $@

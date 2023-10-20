@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/17 11:39:08 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/19 14:31:26 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	init_data(t_vars *vars,int argc, char **argv)
 	if (argc != 5 && argc != 6)
 		return (handle_error("Error : Not enough arguments\n Should be 4 or 5"));
 	vars->error = 0;
+	vars->dieded = 0;
 	func(vars, &vars->philo_nb, argv[1]);
 	func(vars, &vars->tt_d, argv[2]);
 	func(vars, &vars->tt_e, argv[3]);

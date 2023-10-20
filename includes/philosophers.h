@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/16 17:57:04 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:28:33 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_list
 	pthread_t	thread;	
 	int		fork_r;
 	int		fork_l;
-	long long int	start_t;
+	long long	last_meal;
 	int		meal_eaten;
 	t_vars		*vars;
 }	t_list;
@@ -41,12 +41,17 @@ struct s_vars
 	int		tt_e;
 	int		tt_s;
 	int		meal_count;
+	int		dieded;
 	int		error;
+	int		first_timestamp;
 	char		*bad_arg;
 	pthread_mutex_t	*fork_tab;
 	pthread_mutex_t	printf_m;
 	t_list		*philo_lst;
 };
+
+long long	timestamp(void);
+long long	time_diff(long long past, long long new);
 
 int	check_args(t_vars *vars, char **argv);
 size_t	ft_strlen(const char *str);
