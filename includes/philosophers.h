@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/19 18:28:33 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/21 19:05:53 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_list
 	pthread_t	thread;	
 	int		fork_r;
 	int		fork_l;
-	long long	last_meal;
+	int		last_meal;
 	int		meal_eaten;
 	t_vars		*vars;
 }	t_list;
@@ -47,11 +47,12 @@ struct s_vars
 	char		*bad_arg;
 	pthread_mutex_t	*fork_tab;
 	pthread_mutex_t	printf_m;
+	pthread_mutex_t	check_death;
 	t_list		*philo_lst;
 };
 
-long long	timestamp(void);
-long long	time_diff(long long past, long long new);
+int	timestamp(void);
+int	time_diff(long long past, long long new);
 
 int	check_args(t_vars *vars, char **argv);
 size_t	ft_strlen(const char *str);
@@ -70,8 +71,8 @@ int	free_data(t_vars *vars);
 
 int	create_tab(t_vars *vars);
 int	create_mutex_tab(t_vars *vars);
-pthread_t	create_threads(t_vars *vars);
-pthread_t	join_threads(t_vars *vars);
+int	create_threads(t_vars *vars);
+int	join_threads(t_vars *vars);
 
 void	*routine(void *data);
 void	action(t_list *philo, char *str);

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:39:11 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/15 14:03:21 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/21 19:52:25 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ int	destroy_mutex(t_vars *vars)
 	}
 	if (pthread_mutex_destroy(&vars->printf_m))
 		handle_error("Error : pthread_mutex_destroy\n");
+	if (pthread_mutex_destroy(&vars->check_death))
+		handle_error("Error : pthread_mutex_destroy\n");
+	
 	return (0);
 }

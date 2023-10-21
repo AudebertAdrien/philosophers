@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:35:08 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/16 19:25:24 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/21 20:07:47 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	create_mutex_tab(t_vars *vars)
 	is_error = pthread_mutex_init(&(vars->printf_m), NULL);
 	if (is_error)
 		handle_error("Error : pthread_mutex_init\n");
-		
+	is_error = pthread_mutex_init(&(vars->check_death), NULL);
+	if (is_error)
+		handle_error("Error : pthread_mutex_init\n");
 	return (0);
 }
 
