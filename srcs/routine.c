@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:55:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/22 17:47:51 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/22 20:05:26 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	eating(t_vars *vars, t_list *philo)
 	philo->meal_eaten += 1;
 
 	drop_forks(vars, philo);
+	//print_meals(vars, philo);
 }
 
 int	sleeping(t_vars *vars, t_list *philo)

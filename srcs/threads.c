@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:02:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/22 19:18:32 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/22 20:02:09 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	death_checker(t_vars *vars, t_list *philo_lst)
 
 	while(1)	
 	{
+		i = 0;
+		while (i < vars->philo_nb && philo_lst[i].meal_eaten == vars->meal_count)
+			i++;
+		if (i == vars->philo_nb)
+			return ;
 		i = 0;
 		while (i < vars->philo_nb)
 		{
