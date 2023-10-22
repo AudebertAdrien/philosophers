@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/21 19:05:53 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/22 19:18:40 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ struct s_vars
 
 int	timestamp(void);
 int	time_diff(long long past, long long new);
+int	is_dead(t_vars *vars);
 
 int	check_args(t_vars *vars, char **argv);
 size_t	ft_strlen(const char *str);

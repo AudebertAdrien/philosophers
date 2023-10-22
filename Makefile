@@ -39,7 +39,7 @@ mkdir:
 
 vg:
 	@echo "Valgrind Philophers"
-	valgrind $(VG_FLAGS) ./$(NAME) 3 100 100 100 2
+	valgrind $(VG_FLAGS) ./$(NAME) 4 800 200 200 2  
 
 obj/%.o: %.c  mkdir
 	$(CC) $(CLAGS) -I$(INC) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:07:58 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/21 20:07:43 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/22 15:38:27 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void	printf_action(t_vars *vars, int id, char *str)
 	pthread_mutex_lock(&vars->printf_m);	
 	if (!vars->dieded)
 	{
-		printf("%d ms : \n", (timestamp() - vars->first_timestamp));
-		printf("%lld ms\n", (timestamp() - vars->first_timestamp));
+		printf("%d ms : ", (timestamp() - vars->first_timestamp));
 		printf("%d ", id);
 		printf("%s\n", str);
 	}

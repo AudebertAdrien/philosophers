@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:35:08 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/21 20:07:47 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/22 19:18:54 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	create_mutex_tab(t_vars *vars)
 	is_error = pthread_mutex_init(&(vars->check_death), NULL);
 	if (is_error)
 		handle_error("Error : pthread_mutex_init\n");
+	
 	return (0);
 }
 
@@ -47,6 +48,7 @@ int	create_tab(t_vars *vars)
 		vars->philo_lst[i].vars = vars;
 		vars->philo_lst[i].fork_r = i;
 		vars->philo_lst[i].fork_l = (i + 1) % vars->philo_nb;
+		vars->philo_lst[i].last_meal = 0;
 		i++;
 	}
 	return (0);

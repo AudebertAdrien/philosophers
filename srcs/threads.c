@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:02:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/21 19:54:55 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/22 19:18:32 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	death_checker(t_vars *vars, t_list *philo_lst)
 {
-	int	is_dead = 0;
 	int	i = 0;
 
 	while(1)	
@@ -25,12 +24,6 @@ void	death_checker(t_vars *vars, t_list *philo_lst)
 			pthread_mutex_lock(&(vars->check_death));
 			if (time_diff(philo_lst[i].last_meal, timestamp()) > vars->tt_d)
 			{
-				/*
-				printf("1last : %d\n", philo_lst[i].last_meal);
-				printf("1timestamp : %d\n", timestamp());
-				printf("1tt_d : %d\n", vars->tt_d);
-				printf("1time diff : %d\n", time_diff(philo_lst[i].last_meal, timestamp()));
-				*/
 				printf_action(vars, philo_lst[i].philo_id, "DEAD");	
 				vars->dieded = 1;
 			}
@@ -38,7 +31,7 @@ void	death_checker(t_vars *vars, t_list *philo_lst)
 			usleep(100);
 			i++;
 		}
-		if (vars->dieded)
+		if (is_dead(vars))
 			return ;
 	}
 }
@@ -53,12 +46,19 @@ int	create_threads(t_vars *vars)
 	vars->first_timestamp = timestamp();
 	while (i < vars->philo_nb)
 	{
+
+		pthread_mutex_lock(&(vars->check_death));
+		vars->philo_lst[i].last_meal = timestamp();
+		pthread_mutex_unlock(&(vars->check_death));
+
 		is_error = pthread_create(&(vars->philo_lst[i]).thread,
 				NULL, &routine, &vars->philo_lst[i]);
 		if (is_error)
 			handle_error("Error : pthread_create");
-		vars->philo_lst[i].last_meal = timestamp();
 		i++;
+
+
+
 	}
 	death_checker(vars, vars->philo_lst);
 	return (0);

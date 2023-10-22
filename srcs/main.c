@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/21 19:54:59 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/22 18:00:04 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	init_data(t_vars *vars,int argc, char **argv)
 	func(vars, &vars->tt_s, argv[4]);
 	if (argc == 6)
 		func(vars, &vars->meal_count, argv[5]);
+	else
+		vars->meal_count = 0;
 	vars->philo_lst = ft_calloc(vars->philo_nb, sizeof(t_list));
 	if (vars->error == 1)
 		return (1);
