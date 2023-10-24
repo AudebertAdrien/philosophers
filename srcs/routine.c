@@ -6,13 +6,13 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:55:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/22 20:05:26 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/24 14:50:58 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	print_meals(t_vars *vars, t_list *philo)
+void	print_meals(t_vars *vars, t_list *philo)
 {
 	pthread_mutex_lock(&vars->printf_m);	
 	printf("%d : meal eaten : %d\n", philo->philo_id, philo->meal_eaten);
@@ -53,12 +53,12 @@ int	drop_forks(t_vars *vars, t_list *philo)
 	return (0);
 }
 
-void            smart_sleep(int time, t_vars *rules)
+void            smart_sleep(t_vars *vars, int time)
 {
 	int i;
 
 	i = timestamp();
-	while (!(rules->dieded))
+	while (!is_dead(vars))
 	{
 		if (time_diff(i, timestamp()) >= time)
 			break ;
@@ -66,7 +66,7 @@ void            smart_sleep(int time, t_vars *rules)
 	}
 }
 
-int	eating(t_vars *vars, t_list *philo)
+void	eating(t_vars *vars, t_list *philo)
 {
 	take_forks(vars, philo);
 
@@ -75,22 +75,25 @@ int	eating(t_vars *vars, t_list *philo)
 	philo->last_meal = timestamp();
 	pthread_mutex_unlock(&(vars->check_death));
 
-	usleep(philo->vars->tt_e * 1000);
-	//smart_sleep(philo->vars->tt_e, vars);
+	//usleep(philo->vars->tt_e * 1000);
+	smart_sleep(vars, philo->vars->tt_e);
+
+	pthread_mutex_lock(&(philo->check_meal));
 	philo->meal_eaten += 1;
+	pthread_mutex_unlock(&(philo->check_meal));
 
 	drop_forks(vars, philo);
-	//print_meals(vars, philo);
+	print_meals(vars, philo);
 }
 
-int	sleeping(t_vars *vars, t_list *philo)
+void	sleeping(t_vars *vars, t_list *philo)
 {
-	usleep(philo->vars->tt_s * 1000);
-	//smart_sleep(philo->vars->tt_s, vars);
+	//usleep(philo->vars->tt_s * 1000);
 	printf_action(vars, philo->philo_id, "sleeping");
+	smart_sleep(vars, philo->vars->tt_s);
 }
 
-int	thinking(t_vars *vars, t_list *philo)
+void	thinking(t_vars *vars, t_list *philo)
 {
 	printf_action(vars, philo->philo_id, "thinking");
 }
@@ -109,18 +112,26 @@ void	*routine(void *philo)
 {
 	t_list		*phi;
 	t_vars		*vars;
-	int		is_error;
-	struct timeval	tv;
 
 	phi = (t_list *)philo;
 	vars = (t_vars *)phi->vars;
-
+	if (vars->philo_nb == 1)
+	{
+		printf_action(vars, phi->philo_id, "DEAD");	
+		vars->dieded = 1;
+	}
+	int	boo = 0;
 	while (!is_dead(vars))
 	{
 		eating(vars, phi);
+		pthread_mutex_lock(&(phi->check_meal));
 		if (phi->meal_eaten == vars->meal_count)
+			boo= 1;
+		pthread_mutex_unlock(&(phi->check_meal));
+		if (boo)
 			break;
 		sleeping(vars, phi);
 		thinking(vars, phi);
 	}
+	return (NULL);
 }

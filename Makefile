@@ -29,7 +29,7 @@ SRCS		= main.c \
 OBJS		= $(addprefix obj/, $(SRCS:.c=.o))
 
 ifeq ($(DEBUG), 1)
-CFLAG	+= fsanitze=thread
+CFLAGS	+= -fsanitize=thread
 endif
 
 all: $(NAME)
@@ -39,14 +39,14 @@ mkdir:
 
 vg:
 	@echo "Valgrind Philophers"
-	valgrind $(VG_FLAGS) ./$(NAME) 4 800 200 200 2  
+	valgrind $(VG_FLAGS) ./$(NAME) 1 800 200 200 3  
 
 obj/%.o: %.c  mkdir
-	$(CC) $(CLAGS) -I$(INC) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@echo "Compile Philophers"
-	$(CC) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 clean:
 	@echo "Clean Philophers" 
 	@rm -rf $(OBJS)

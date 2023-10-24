@@ -6,20 +6,20 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/22 18:00:04 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/24 14:49:06 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	assign_value(t_vars *vars, int *param, char *arg)
+void	assign_value(t_vars *vars, int *param, char *arg)
 {
 	*param = ft_atoi(vars, arg);
 }
 
 int	init_data(t_vars *vars,int argc, char **argv)
 {
-	int	(*func)(t_vars *, int *, char *) = assign_value;
+	void	(*func)(t_vars *, int *, char *) = assign_value;
 
 	if (argc != 5 && argc != 6)
 		return (handle_error("Error : Not enough arguments\n Should be 4 or 5"));
