@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/23 19:28:33 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/24 14:55:13 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
-#include <errno.h>
 #include <sys/time.h>
 
 typedef struct s_vars t_vars;

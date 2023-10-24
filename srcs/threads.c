@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:02:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/23 19:20:16 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/24 15:23:19 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@ void	death_checker(t_vars *vars, t_list *philo_lst)
 		while (++i < vars->philo_nb)
 		{
 
-			//pthread_mutex_lock(&(vars->check_meal));
-			//if (i < vars->philo_nb && philo_lst[i].meal_eaten == vars->meal_count)
-			//	continue ;
-			//pthread_mutex_unlock(&(vars->check_meal));
-			pthread_mutex_lock(&(vars->check_death));
-			if (time_diff(philo_lst[i].last_meal, timestamp()) > vars->tt_d)
+			pthread_mutex_lock(&(philo_lst[i].check_meal));
+			if (philo_lst[i].meal_eaten != vars->meal_count)
 			{
-				printf_action(vars, philo_lst[i].philo_id, "DEAD");	
-				vars->dieded = 1;
+				pthread_mutex_lock(&(vars->check_death));
+				if (time_diff(philo_lst[i].last_meal, timestamp()) > vars->tt_d)
+				{
+					printf_action(vars, philo_lst[i].philo_id, "DEAD");	
+					vars->dieded = 1;
+				}
+				pthread_mutex_unlock(&(vars->check_death));
 			}
-			pthread_mutex_unlock(&(vars->check_death));
+			pthread_mutex_unlock(&(philo_lst[i].check_meal));
 		}
 		if (is_dead(vars))
 			return ;

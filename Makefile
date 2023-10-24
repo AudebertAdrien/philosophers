@@ -1,10 +1,7 @@
-NAME		= a.out
+NAME		= philo
 
-CC		= gcc -g -lpthread
-CFLAGS		= -Wall -Wextra
-
-VG_FLAGS	= --tool=drd 
-#VG_FLAgS	= --tool=helgrind 
+CC		= gcc -lpthread
+CFLAGS		= -Wall -Wextra -Werror
 
 INC		= ./includes
 
@@ -36,10 +33,6 @@ all: $(NAME)
 
 mkdir:
 	mkdir -p $(OBJ_DIR) 
-
-vg:
-	@echo "Valgrind Philophers"
-	valgrind $(VG_FLAGS) ./$(NAME) 1 800 200 200 3  
 
 obj/%.o: %.c  mkdir
 	$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
