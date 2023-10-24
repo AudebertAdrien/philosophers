@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:35:08 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/23 18:57:46 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/24 15:41:01 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	create_mutex_tab(t_vars *vars)
 {
-	int	is_error;
 	int	i;
+	int	is_error;
 
 	i = 0;
 	vars->fork_tab = ft_calloc(vars->philo_nb, sizeof(pthread_mutex_t));
