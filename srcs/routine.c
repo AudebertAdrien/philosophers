@@ -6,25 +6,11 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:55:45 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/28 18:06:42 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/28 18:25:22 by aaudeber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-
-void            smart_sleep(t_vars *vars, int time)
-{
-       int i;
-
-       i = timestamp();
-      while (!is_dead(vars))
-       {
-               if (time_diff(i, timestamp()) >= time)
-                       break ;
-               usleep(50);
-       }
-}
 
 void	eating(t_vars *vars, t_list *philo)
 {

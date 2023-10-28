@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/28 17:59:50 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/28 18:25:10 by aaudeber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int		create_mutex_tab(t_vars *vars);
 int		create_threads(t_vars *vars);
 int		join_threads(t_vars *vars);
 
+void	smart_sleep(t_vars *vars, int time);
 void	is_alone(t_vars *vars, t_list *phi);
 int		take_forks(t_vars *vars, t_list *philo);
 int		drop_forks(t_vars *vars, t_list *philo);

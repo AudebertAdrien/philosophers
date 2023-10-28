@@ -6,11 +6,24 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 17:39:29 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/28 18:00:53 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/28 18:24:42 by aaudeber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	smart_sleep(t_vars *vars, int time)
+{
+	int	i;
+
+	i = timestamp();
+	while (!is_dead(vars))
+	{
+		if (time_diff(i, timestamp()) >= time)
+			break ;
+		usleep(50);
+	}
+}
 
 int	take_forks(t_vars *vars, t_list *philo)
 {
