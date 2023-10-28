@@ -1,6 +1,6 @@
 NAME		= philo
 
-CC		= gcc -lpthread
+CC		= gcc -pthread
 CFLAGS		= -Wall -Wextra -Werror
 
 INC		= ./includes
