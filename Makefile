@@ -12,6 +12,7 @@ SRCS		= main.c \
 		  check_args.c \
 		  init_data.c \
 		  threads.c\
+		  action.c \
 		  routine.c \
 		  utils.c \
 		  error.c \

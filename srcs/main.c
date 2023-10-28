@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:50:31 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/24 14:49:06 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/28 16:36:11 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ void	assign_value(t_vars *vars, int *param, char *arg)
 	*param = ft_atoi(vars, arg);
 }
 
-int	init_data(t_vars *vars,int argc, char **argv)
+int	init_data(t_vars *vars, int argc, char **argv)
 {
-	void	(*func)(t_vars *, int *, char *) = assign_value;
+	void	(*func)(t_vars *, int *, char *);
 
+	func = assign_value;
 	if (argc != 5 && argc != 6)
-		return (handle_error("Error : Not enough arguments\n Should be 4 or 5"));
+		return (handle_error(ARG_ERROR));
 	vars->error = 0;
 	vars->dieded = 0;
 	func(vars, &vars->philo_nb, argv[1]);

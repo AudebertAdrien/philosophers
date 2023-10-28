@@ -6,7 +6,7 @@
 /*   By: aaudeber <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 16:08:21 by aaudeber          #+#    #+#             */
-/*   Updated: 2023/10/11 19:06:49 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/28 17:33:16 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_overflow(int res, int num, int sign)
 	if (sign)
 	{
 		if ((tmp - num) / 10 == res && tmp > 0)
-			return (0); 
+			return (0);
 		else
 			return (1);
 	}
@@ -37,8 +37,8 @@ int	is_overflow(int res, int num, int sign)
 int	ft_atoi(t_vars *vars, const char *nptr)
 {
 	int	res;
-	int		sign;
-	int		i;
+	int	sign;
+	int	i;
 
 	i = 0;
 	sign = 1;
