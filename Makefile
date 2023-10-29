@@ -1,6 +1,6 @@
 NAME		= philo
 
-CC		= gcc -pthread
+CC		= gcc -g -pthread
 CFLAGS		= -Wall -Wextra -Werror
 
 INC		= ./includes
@@ -17,6 +17,7 @@ SRCS		= main.c \
 		  utils.c \
 		  error.c \
 		  free_data.c \
+		  ft_isdigit.c \
 		  ft_strlen.c \
 		  ft_strdup.c \
 		  ft_atoi.c \
@@ -32,10 +33,11 @@ endif
 
 all: $(NAME)
 
-mkdir:
-	mkdir -p $(OBJ_DIR) 
-
-obj/%.o: %.c  mkdir
+obj/%.o: %.c  
+	@if [ ! -d $(OBJ_DIR) ]; then \
+		echo mkdir $(OBJ_DIR); \
+		mkdir -p $(OBJ_DIR); \
+	fi
 	$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 $(NAME): $(OBJS)

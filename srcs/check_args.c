@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:17:56 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/15 14:00:29 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/29 19:39:09 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	is_valid_number(t_vars *vars, char *nptr)
 	i = 0;
 	while (nptr[i])
 	{
+		if (!ft_isdigit(nptr[i]))
+			return (1);
 		if (nptr[i] == '-')
 		{
 			vars->bad_arg = nptr;
@@ -33,7 +35,7 @@ int	check_args(t_vars *vars, char **argv)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (argv[i])
 	{
 		if (is_valid_number(vars, argv[i]))

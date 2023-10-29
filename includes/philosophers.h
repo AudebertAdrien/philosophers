@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:03:01 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/28 18:25:10 by aaudeber         ###   ########.fr       */
+/*   Updated: 2023/10/29 19:34:55 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int		check_args(t_vars *vars, char **argv);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s);
 int		ft_atoi(t_vars *vars, const char *nptr);
+int		ft_isdigit(int c);
 void	ft_putstr(char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:39:11 by motoko            #+#    #+#             */
-/*   Updated: 2023/10/24 15:42:52 by motoko           ###   ########.fr       */
+/*   Updated: 2023/10/29 19:23:50 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	free_data(t_vars *vars)
 {
 	free(vars->fork_tab);
+	free(vars->philo_lst);
 	vars->fork_tab = NULL;
+	vars->philo_lst = NULL;
 	return (0);
 }
 
