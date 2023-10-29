@@ -26,6 +26,7 @@ SRCS		= main.c \
 		  ft_atoi.c \
 
 OBJS		= $(addprefix obj/, $(SRCS:.c=.o))
+DIROBJ		= obj
 
 ifeq ($(DEBUG), 1)
 CFLAGS	+= -fsanitize=thread
@@ -33,11 +34,10 @@ endif
 
 all: $(NAME)
 
-obj/%.o: %.c  
-	@if [ ! -d $(OBJ_DIR) ]; then \
-		echo mkdir $(OBJ_DIR); \
-		mkdir -p $(OBJ_DIR); \
-	fi
+$(DIROBJ):
+	mkdir $@
+
+obj/%.o: %.c | $(DIROBJ) 
 	$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
 
 $(NAME): $(OBJS)
